@@ -12,32 +12,18 @@
   </head>
   <body data-ng-app="game">
     <div id="container">
-	  <div class="level">
-	    <div class="layer layer_back">
-		  <div class="wall wall_left"></div>
-		  <div class="wall wall_left wall_half"></div>
-		  <div class="wall wall_center"></div>
-		  <div class="wall wall_right wall_half"></div>
-		  <div class="wall wall_right"></div>
-		</div>
-	    <div class="layer layer_mid">
-		  <div class="wall wall_left"></div>
-		  <div class="wall wall_left wall_half"></div>
-		  <div class="wall wall_center"></div>
-		  <div class="wall wall_right wall_half"></div>
-		  <div class="wall wall_right"></div>
-		</div>
-	    <div class="layer layer_front">
-		  <div class="wall wall_left"></div>
-		  <div class="wall wall_center"></div>
-		  <div class="wall wall_right"></div>
-		</div>
-		<div class="layer layer_before">
-		  <div class="wall wall_left"></div>
-		  <div class="wall wall_right"></div>
+	  <div class="level"
+	       data-ng-controller="LevelController">
+		<div class="layer {{ 'layer_' + layer }}"
+		     data-ng-repeat="layer in layers"
+			 data-ng-init="y = 3 - $index; range = getRangeAt(y)">
+		  <div class="wall {{ getWallClass($index, range.length) }}"
+		       data-ng-repeat="wall in range track by $index"
+			   data-ng-show="wallPresentAt($index, y, range.length)"></div>
 		</div>
 	  </div>
 	</div>
   </body>
   <script type="text/javascript" src="app/js/common/app.js"></script>
+  <script type="text/javascript" src="app/js/controllers/levelController.js"></script>
 </html>
