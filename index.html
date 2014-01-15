@@ -11,7 +11,8 @@
     <script type="text/javascript" src="lib/js/angular.min.js"></script>
   </head>
   <body data-ng-app="game">
-    <div id="container">
+    <div id="container"
+	     data-ng-controller="CoreController">
 	  <div class="level"
 	       data-ng-controller="LevelController">
 		<div class="layer"
@@ -22,8 +23,17 @@
 			   data-ng-show="wallPresentAt($index, $parent.$index, range.length)"></div>
 		</div>
 	  </div>
+	  <div class="pointers">
+		<a href="" class="pointers__hand pointers__hand_move-forward"
+		   data-ng-click="moveForward()"></a>
+		<a href="" class="pointers__hand pointers__hand_turn-right"
+		   data-ng-click="turnRight()"></a>
+	    <a href="" class="pointers__hand pointers__hand_turn-left"
+		   data-ng-click="turnLeft()"></a>
+	  </div>
 	</div>
   </body>
   <script type="text/javascript" src="app/js/common/app.js"></script>
+  <script type="text/javascript" src="app/js/controllers/coreController.js"></script>
   <script type="text/javascript" src="app/js/controllers/levelController.js"></script>
 </html>

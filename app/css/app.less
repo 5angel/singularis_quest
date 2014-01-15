@@ -17,6 +17,41 @@ body {
   .box-sizing(border-box);
 }
 
+.pointers {
+  position: relative;
+  z-index: 3;
+  opacity: 0;
+  height: 100%;
+  margin-top: -440px;
+
+  &:hover { opacity: 1 }
+}
+
+.pointers__hand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 54px;
+  height: 46px;
+  background-image: url('../i/pointers.png');
+  background-repeat: no-repeat;
+  background-position: 0 0;
+
+  &.pointers__hand_move-forward { margin-top: 24px }
+
+  &.pointers__hand_turn-right {
+    left: 100%;
+	margin-left: -(54px + 60px);
+    background-position: -54px 0;
+  }
+
+  &.pointers__hand_turn-left {
+    left: 0;
+	margin-left: 60px;
+    background-position: -108px 0;
+  }
+}
+
 .level, .wall:before, .wall:after {
   background-repeat: no-repeat;
   background-position: 0 0;
@@ -68,8 +103,8 @@ body {
 
 	& > .wall:nth-child(3) {
       z-index: 2;
-	  width: 204px;
-	  margin-left: -102px;
+	  width: 200px;
+	  margin-left: -100px;
 	  background-color: lighten(black, 35);
 
 	  &:before { content: none }
