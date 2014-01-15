@@ -12,6 +12,12 @@ app.controller('LevelController', ['$scope', function ($scope) {
 	  map[i] = makeRandomFromRange(0, 1);
 
 	return map;
+	return [
+	  1, 1, 0, 0, 1,
+	  0, 0, 0, 1, 0,
+	  1, 1, 0, 0, 1,
+	  0, 0, 0, 1, 0
+	]
   }
 
   var level = {
@@ -19,50 +25,35 @@ app.controller('LevelController', ['$scope', function ($scope) {
 	map: makeNoiseMap(20)
   }; 
 
-  $scope.layers = ['back', 'mid', 'front', 'before'];
+  $scope.makeArray = function (length) {
+    return new Array(length);
+  };  
 
-  $scope.getRangeAt = function (y) {
+  $scope.getRangeAt = function (index) {
     var length = (function (value) {
 	  switch (value) {
-		case 0:
+	    case 3:
 		  return 2;
 		  break;
-	    case 1:
+		case 2:
 		  return 3;
 		  break;
 		default:
 		  return 5;
 		  break;
 	  }
-	}) (y);
+	}) (index);
 
-    return new Array(length);
-  };
-
-  $scope.getWallClass = function (x, range) {
-    var str = 'wall_';
-
-	if (range > 2 && Math.ceil((range + 1) / 2) === x + 1) {
-	  return 'wall_center';
-	} else {
-	  if (x === 0 || (x === 1 && range === 5))
-	    str += 'left';
-	  else
-	    str += 'right';
-
-	  if (range === 5 && (x === 1 || x === 3))
-	    str += ' wall_half';
-	}
-
-	return str;
+    return $scope.makeArray(length);
   };
 
   $scope.wallPresentAt = function (x, y, range) {
-    x = x - Math.floor(range / 2);
-	x = range === 2 && x === 0 ? 1 : x;
-
 	var pos = { x: 2, y: 3 }
-	var dx = pos.x + x, dy = pos.y - y;
+
+	var dx = range === 3
+	  ? pos.x + (x - 1)
+	  : pos.x + (x - 2);
+	var dy = pos.y - (3 - y);
 
 	return level.map[(dy * level.width) + dx] === 1;
   };
