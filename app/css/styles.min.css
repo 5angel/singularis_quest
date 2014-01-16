@@ -82,9 +82,9 @@ body {
   width: 128px;
   height: 64px;
 }
-.layer:first-child  > .wall  > .wall:first-child,
-.layer:first-child  > .wall  > .wall:last-child {
-  margin-left: -320px;
+.layer:first-child  > .wall:first-child,
+.layer:first-child  > .wall:last-child {
+  margin-left: 80px;
   background-color: #1f1f1f;
 }
 .layer:first-child  > .wall:nth-child(2),
@@ -102,7 +102,7 @@ body {
   margin-left: 64px;
 }
 .layer:first-child  > .wall:last-child {
-  margin-left: -128px;
+  margin-left: -208px;
 }
 .layer:nth-child(2) {
   z-index: 1;
