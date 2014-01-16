@@ -32,7 +32,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	  }
 	}) (range);
 
-	var dy = 3 - y;
+	var dy = 4 - y;
 
 	if (dir >= 2)
 	  dx *= -1;
@@ -95,10 +95,10 @@ app.controller('CoreController', ['$scope', function ($scope) {
   $scope.getRangeAt = function (index) {
     var length = (function (value) {
 	  switch (value) {
-	    case 3:
+	    case 4:
 		  return 2;
 		  break;
-		case 2:
+		case 3:
 		  return 3;
 		  break;
 		default:

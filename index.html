@@ -16,7 +16,7 @@
 	  <div class="level"
 	       data-ng-controller="LevelController">
 		<div class="layer"
-		     data-ng-repeat="layer in makeArray(4) track by $index"
+		     data-ng-repeat="layer in makeArray(5) track by $index"
 			 data-ng-init="range = getRangeAt($index)">
 		  <div class="wall {{ getWallClass($index, range.length) }}"
 		       data-ng-repeat="wall in range track by $index"
