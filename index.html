@@ -18,9 +18,14 @@
 		<div class="layer"
 		     data-ng-repeat="layer in makeArray(5) track by $index"
 			 data-ng-init="range = getRangeAt($index)">
-		  <div class="wall {{ getWallClass($index, range.length) }}"
-		       data-ng-repeat="wall in range track by $index"
-			   data-ng-show="wallPresentAt($index, $parent.$index, range.length)"></div>
+		  <div class="tiles">
+		    <div class="tiles__item"
+			     data-ng-repeat="tile in range track by $index"></div>
+		  </div>
+		  <div class="walls">
+            <div class="wall {{ getWallClass($index, $parent.$index, range.length) }}"
+		         data-ng-repeat="tile in range track by $index"></div>
+		  </div>
 		</div>
 	  </div>
 	  <div class="pointers">

@@ -1,20 +1,20 @@
 app.controller('CoreController', ['$scope', function ($scope) {
   console.log('CoreController init');
 
-  var PLAYER = new Entity(0, 0);
+  var PLAYER = new Entity(2, 4);
 
   var level = {
-    width: 10,
+    width: 5,
 	map: [
-	  0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-	  0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
-	  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	  0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
-	  0, 0, 0, 0, 0, 0, 0, 1, 0, 0
+	  0, 0, 0, 0, 0,
+	  0, 0, 0, 0, 0,
+	  0, 0, 0, 0, 0,
+	  0, 0, 0, 0, 0,
+	  0, 0, 0, 0, 0
 	]
   }
 
-  $scope.wallPresentAt = function (x, y, range) {
+  $scope.getWallClass = function (x, y, range) {
 	var pos = PLAYER.getPosition();
 	var dir = PLAYER.getDirection();
 
@@ -22,12 +22,15 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	  switch (value) {
 	    case 5:
 		  return x - 2;
+
 		  break;
 		case 3:
 		  return x - 1;
+
 		  break;
 		case 2:
 		  return x === 0 ? -1 : 1;
+
 		  break;
 	  }
 	}) (range);
@@ -50,12 +53,16 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	var width  = level.width,
 	    height = level.map.length / width;
 
-	if (px < 0 || px >= width || py < 0 || py >= height)
-	  return true;
+	var type = level.map[(py * level.width) + px];
 
-	var index = (py * level.width) + px;
-
-	return level.map[index] === 1;
+	if (px < 0 || px >= width || py < 0 || py >= height || type === 3)
+	  return 'wall_full';
+	else if (type === 1)
+	  return 'wall_side';
+	else if (type === 2)
+	  return 'wall_front';
+	else
+	  return 'wall_empty';
   };
 
   $scope.moveForward = function () {
@@ -65,14 +72,18 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	switch (dir) {
 	  case 0:
 	    pos.y--;
+
 	    break;
 	  case 1:
 	    pos.x++;
+
 	    break;
 	  case 2:
 	    pos.y++;
+
 	    break;
 	  case 3:
+
 	    pos.x--;
 	    break;
 	}
