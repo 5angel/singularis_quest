@@ -87,11 +87,25 @@ body {
   margin-left: 80px;
   background-color: #1f1f1f;
 }
+.layer:first-child  > .wall:first-child:before,
+.layer:first-child  > .wall:last-child:before {
+  width: 36px;
+  height: 64px;
+  margin-left: 128px;
+  background-position: -208px -36px;
+}
 .layer:first-child  > .wall:nth-child(2),
 .layer:first-child  > .wall:nth-child(4) {
   z-index: 1;
   margin-left: -192px;
   background-color: #3d3d3d;
+}
+.layer:first-child  > .wall:nth-child(2):before,
+.layer:first-child  > .wall:nth-child(4):before {
+  width: 12px;
+  height: 64px;
+  margin-left: 128px;
+  background-position: -336px -304px;
 }
 .layer:first-child  > .wall:nth-child(3) {
   z-index: 2;
@@ -101,8 +115,16 @@ body {
 .layer:first-child  > .wall:nth-child(4) {
   margin-left: 64px;
 }
+.layer:first-child  > .wall:nth-child(4):before {
+  margin-left: -12px;
+  background-position: -348px -304px;
+}
 .layer:first-child  > .wall:last-child {
   margin-left: -208px;
+}
+.layer:first-child  > .wall:last-child:before {
+  margin-left: -36px;
+  background-position: -242px -36px;
 }
 .layer:nth-child(2) {
   z-index: 1;
@@ -149,14 +171,14 @@ body {
 }
 .layer:nth-child(2)  > .wall:nth-child(4):before {
   margin-left: -36px;
-  background-position: -336px -286px;
+  background-position: -360px -286px;
 }
 .layer:nth-child(2)  > .wall:last-child {
   margin-left: -100px;
 }
 .layer:nth-child(2)  > .wall:last-child:before {
   margin-left: -108px;
-  background-position: -208px -18px;
+  background-position: -280px -18px;
 }
 .layer:nth-child(3) {
   z-index: 2;
@@ -197,11 +219,11 @@ body {
 }
 .layer:nth-child(3)  > .wall:nth-child(4):before {
   margin-left: -60px;
-  background-position: -372px -256px;
+  background-position: -396px -256px;
 }
 .layer:nth-child(3)  > .wall:last-child:before {
   margin-left: -100px;
-  background-position: -316px 0;
+  background-position: -388px 0;
 }
 .layer:nth-child(4) {
   z-index: 3;
@@ -234,7 +256,7 @@ body {
 }
 .layer:nth-child(4)  > .wall:last-child:before {
   margin-left: -140px;
-  background-position: -432px -186px;
+  background-position: -456px -186px;
 }
 .layer:last-child {
   z-index: 4;
@@ -248,7 +270,7 @@ body {
 }
 .layer:last-child  > .wall:last-child:before {
   margin-left: -100px;
-  background-position: -572px -136px;
+  background-position: -596px -136px;
 }
 .wall {
   position: absolute;

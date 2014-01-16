@@ -82,12 +82,26 @@ body {
 	  &:first-child, &:last-child {
 	    margin-left: 80px;
 	    background-color: lighten(black, 12);
+
+		&:before {
+		  width: 36px;
+		  height: 64px;
+		  margin-left: 128px;
+		  background-position: -208px -36px;
+		}
 	  }
 
 	  &:nth-child(2), &:nth-child(4) {
         z-index: 1;
 		margin-left: -192px;
 		background-color: lighten(black, 24);
+
+		&:before {
+		  width: 12px;
+		  height: 64px;
+		  margin-left: 128px;
+		  background-position: -336px -304px;
+		}
 	  }
 	  
 	  &:nth-child(3) {
@@ -96,8 +110,23 @@ body {
 		background-color: lighten(black, 34);
 	  }
 
-	  &:nth-child(4) { margin-left: 64px }
-	  &:last-child { margin-left: -208px }
+	  &:nth-child(4) {
+		margin-left: 64px;
+
+	    &:before {
+	      margin-left: -12px;
+		  background-position: -348px -304px;
+	    }
+	  }
+
+	  &:last-child {
+	    margin-left: -208px;
+
+		&:before {
+		  margin-left: -36px;
+		  background-position: -242px -36px;
+		}
+	  }
 	}
   }
   
@@ -146,7 +175,7 @@ body {
 
 	  &:before {
 	    margin-left: -36px;
-	    background-position: -336px -286px;
+	    background-position: -360px -286px;
 	  }
 	}
 
@@ -155,7 +184,7 @@ body {
 
       &:before {
 	    margin-left: -108px;
-	    background-position: -208px -18px;
+	    background-position: -280px -18px;
 	  }
 	}
   }
@@ -199,13 +228,13 @@ body {
 
 	  &:before {
 	    margin-left: -60px;
-	    background-position: -372px -256px;
+	    background-position: -396px -256px;
 	  }
 	}
 
 	& > .wall:last-child:before {
 	  margin-left: -100px;
-	  background-position: -316px 0;
+	  background-position: -388px 0;
 	}
   }
 
@@ -240,7 +269,7 @@ body {
 
 	  &:before {
 	    margin-left: -140px;
-		background-position: -432px -186px;
+		background-position: -456px -186px;
 	  }
 	}
   }
@@ -258,7 +287,7 @@ body {
 
 	& > .wall:last-child:before {
 	  margin-left: -100px;
-      background-position: -572px -136px;
+      background-position: -596px -136px;
 	}
   }
 }
