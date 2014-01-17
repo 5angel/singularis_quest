@@ -43,10 +43,14 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	    break;
 	}
 
-	PLAYER.setPosition(pos.x, pos.y);
+	var type = level.map[(pos.y * level.width) + pos.x];
+	
+	console.log(pos, type);
+	if (type === 0)
+	  PLAYER.setPosition(pos.x, pos.y);
   };
 
-  $scope.getWallClass = function (x, y, range) {
+  $scope.isWallPresent = function (x, y, range) {
 	var pos = PLAYER.getPosition();
 	var dir = PLAYER.getDirection();
 
@@ -88,9 +92,9 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	var type = level.map[(py * level.width) + px];
 
 	if (px < 0 || px >= width || py < 0 || py >= height || type === 1)
-	  return 'wall_full';
+	  return true;
 	else
-	  return 'wall_empty';
+	  return false;
   };
 
   var keysLocked = false;
