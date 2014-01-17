@@ -43,9 +43,14 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	    break;
 	}
 
-	var type = level.map[(pos.y * level.width) + pos.x];
+	var width  = level.width,
+	    height = level.map.length / width;
+
+	if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height)
+	  return;
 	
-	console.log(pos, type);
+	var type = level.map[(pos.y * level.width) + pos.x];
+
 	if (type === 0)
 	  PLAYER.setPosition(pos.x, pos.y);
   };
