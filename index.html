@@ -11,34 +11,20 @@
     <script type="text/javascript" src="lib/js/angular.min.js"></script>
   </head>
   <body data-ng-app="game">
-    <div id="container"
-	     data-ng-controller="CoreController">
-	  <div class="level"
-	       data-ng-controller="LevelController">
+    <div id="container" tabindex="0"
+	     data-ng-controller="CoreController"
+		 data-ng-keydown="onKeyDown($event)"
+		 data-ng-keyup="onKeyUp()">
+	  <div class="level">
 		<div class="layer"
 		     data-ng-repeat="layer in makeArray(5) track by $index"
 			 data-ng-init="range = getRangeAt($index)">
-		  <div class="tiles">
-		    <div class="tiles__item"
-			     data-ng-repeat="tile in range track by $index"></div>
-		  </div>
-		  <div class="walls">
-            <div class="wall {{ getWallClass($index, $parent.$index, range.length) }}"
-		         data-ng-repeat="tile in range track by $index"></div>
-		  </div>
+          <div class="wall {{ getWallClass($index, $parent.$index, range.length) }}"
+		       data-ng-repeat="tile in range track by $index"></div>
 		</div>
-	  </div>
-	  <div class="pointers">
-		<a href="" class="pointers__hand pointers__hand_move-forward"
-		   data-ng-click="moveForward()"></a>
-		<a href="" class="pointers__hand pointers__hand_turn-right"
-		   data-ng-click="turnRight()"></a>
-	    <a href="" class="pointers__hand pointers__hand_turn-left"
-		   data-ng-click="turnLeft()"></a>
 	  </div>
 	</div>
   </body>
   <script type="text/javascript" src="app/js/common/app.js"></script>
   <script type="text/javascript" src="app/js/controllers/coreController.js"></script>
-  <script type="text/javascript" src="app/js/controllers/levelController.js"></script>
 </html>

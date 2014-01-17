@@ -4,15 +4,47 @@ app.controller('CoreController', ['$scope', function ($scope) {
   var PLAYER = new Entity(2, 4);
 
   var level = {
-    width: 5,
+    width: 20,
 	map: [
-	  0, 0, 0, 0, 0,
-	  0, 0, 0, 0, 0,
-	  0, 0, 0, 0, 0,
-	  0, 0, 0, 0, 0,
-	  0, 0, 0, 0, 0
+	  1,1,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,
+	  1,1,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,
+	  1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	  1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	  1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	  0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,
+	  0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,
+	  0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
+	  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+	  1,0,0,1,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,
+	  0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1
 	]
   }
+
+  function stepForward() {
+	var pos = PLAYER.getPosition();
+	var dir = PLAYER.getDirection();
+
+	switch (dir) {
+	  case 0:
+	    pos.y--;
+
+	    break;
+	  case 1:
+	    pos.x++;
+
+	    break;
+	  case 2:
+	    pos.y++;
+
+	    break;
+	  case 3:
+
+	    pos.x--;
+	    break;
+	}
+
+	PLAYER.setPosition(pos.x, pos.y);
+  };
 
   $scope.getWallClass = function (x, y, range) {
 	var pos = PLAYER.getPosition();
@@ -55,40 +87,44 @@ app.controller('CoreController', ['$scope', function ($scope) {
 
 	var type = level.map[(py * level.width) + px];
 
-	if (px < 0 || px >= width || py < 0 || py >= height || type === 3)
+	if (px < 0 || px >= width || py < 0 || py >= height || type === 1)
 	  return 'wall_full';
-	else if (type === 1)
-	  return 'wall_side';
-	else if (type === 2)
-	  return 'wall_front';
 	else
 	  return 'wall_empty';
   };
 
-  $scope.moveForward = function () {
-	var pos = PLAYER.getPosition();
-	var dir = PLAYER.getDirection();
+  var keysLocked = false;
 
-	switch (dir) {
-	  case 0:
-	    pos.y--;
+  $scope.onKeyDown = function ($event) {
 
-	    break;
-	  case 1:
-	    pos.x++;
+	if (!keysLocked) {
+      keysLocked = true;
 
-	    break;
-	  case 2:
-	    pos.y++;
+	  var dir = PLAYER.getDirection();
 
-	    break;
-	  case 3:
+	  switch ($event.keyCode) {
+	    case 65:
+		  dir--;
 
-	    pos.x--;
-	    break;
+		  break;
+	    case 68:
+		  dir++
+
+		  break;
+		case 87:
+		  stepForward();
+		  return;
+
+		  break;
+	  }
+
+	  if (PLAYER.getDirection() !== dir)
+	    PLAYER.setDirection(dir);
 	}
+  };
 
-	PLAYER.setPosition(pos.x, pos.y);
+  $scope.onKeyUp = function () {
+    keysLocked = false;
   };
 
   $scope.turnRight = function () {
