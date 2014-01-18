@@ -27,25 +27,39 @@ function Entity(x, y) {
 
 	direction = value;
 
-	var name = (function () {
-	  switch (direction) {
-	    case 0:
-		  return 'north';
-		  break;
-		case 1:
-		  return 'east';
-		  break;
-		case 2:
-		  return 'south';
-		  break;
-		case 3:
-		  return 'west';
-		  break;
-	  };
-	}) ();
+	var DIRECTIONS = ['north', 'east', 'south', 'west'];
 
-	console.log('Direction is set to', name);
+	console.log('Direction is set to', DIRECTIONS[direction]);
   };
 
   this.setPosition(x, y);
 };
+
+function Level(collisions, width) {
+  collisions = collisions || new Array(25);
+  width = width || 5;
+
+  var length = collisions.length;
+
+  if (collisions.length % width !== 0)
+    console.error('Level has invalid dimensions!');
+
+  this.getCollisions = function (x, y) {
+    if (x === undefined && y === undefined)
+      return collisions.slice();
+	else {
+	  x = x || 0;
+	  y = y || 0;
+
+	  return collisions[(y * width) + x];
+	}
+  };
+
+  this.getDimensions = function () {
+    return {
+	  length: length,
+	  width: width,
+	  height: length / width
+	}
+  };
+}
