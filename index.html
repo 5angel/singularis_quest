@@ -15,6 +15,9 @@
 	     data-ng-controller="CoreController"
 		 data-ng-keydown="onKeyDown($event)"
 		 data-ng-keyup="onKeyUp()">
+	  <div class="notice">
+	    <div class="notice__wrap">click to continue</div>
+	  </div>
 	  <div class="level">
 		<div class="layer"
 		     data-ng-repeat="layer in makeArray(5) track by $index"
