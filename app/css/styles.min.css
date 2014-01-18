@@ -8,6 +8,7 @@
 }
 body {
   background-color: black;
+  font-family: monospace;
 }
 #container {
   overflow: hidden;
@@ -23,10 +24,17 @@ body {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
-#container:focus > .notice {
+#container:focus {
+  outline: none;
+}
+#container:focus  > .notice {
   display: none;
 }
 .notice {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   line-height: 600px;
@@ -37,8 +45,11 @@ body {
   display: inline-block;
   width: 50%;
   line-height: normal;
-  padding: 20px 40px;
+  padding: 40px 20px;
+  background-color: black;
+  vertical-align: middle;
   text-align: center;
+  color: white;
 }
 .pointers {
   position: relative;
