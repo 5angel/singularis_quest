@@ -22,9 +22,11 @@
 		<div class="layer"
 		     data-ng-repeat="layer in makeArray(5) track by $index"
 			 data-ng-init="range = getRangeAt($index)">
-          <div class="wall"
-		       data-ng-class="{ 'wall_empty': !isWallPresent($index, $parent.$index, range.length) }"
-		       data-ng-repeat="tile in range track by $index"></div>
+	      <div class="layers__walls">
+            <div class="wall"
+		         data-ng-class="{ 'wall_empty': !isWallPresent($index, $parent.$index, range.length) }"
+		         data-ng-repeat="tile in range track by $index"></div>
+		    </div>
 		</div>
 	  </div>
 	</div>

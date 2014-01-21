@@ -27,8 +27,8 @@ app.controller('CoreController', ['$scope', function ($scope) {
   ], 20);
 
   function stepForward() {
-	var pos = PLAYER.getPosition();
-	var dir = PLAYER.getDirection();
+	var pos = PLAYER.position();
+	var dir = PLAYER.direction();
 
 	switch (dir) {
 	  case 0:
@@ -49,20 +49,15 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	    break;
 	}
 
-	var dims = level.getDimensions();
-
-	if (pos.x < 0 || pos.x >= dims.width || pos.y < 0 || pos.y >= dims.height)
-	  return;
-	
 	var type = level.getCollisions(pos.x, pos.y);
 
 	if (type === 0)
-	  PLAYER.setPosition(pos.x, pos.y);
+	  PLAYER.position(pos.x, pos.y);
   };
 
   $scope.isWallPresent = function (x, y, range) {
-	var pos = PLAYER.getPosition();
-	var dir = PLAYER.getDirection();
+	var pos = PLAYER.position();
+	var dir = PLAYER.direction();
 
 	var dx = (function (value) {
 	  switch (value) {
@@ -96,13 +91,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	  py = pos.y + dx;
 	}
 
-    var dims = level.getDimensions();
-	var type = level.getCollisions(px, py);
-
-	if (px < 0 || px >= dims.width || py < 0 || py >= dims.height || type === 1)
-	  return true;
-	else
-	  return false;
+	return level.getCollisions(px, py) === 1;
   };
 
   var keysLocked = false;
@@ -112,7 +101,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	if (!keysLocked) {
       keysLocked = true;
 
-	  var dir = PLAYER.getDirection();
+	  var dir = PLAYER.direction();
 
 	  switch ($event.keyCode) {
 	    case 65:
@@ -130,21 +119,13 @@ app.controller('CoreController', ['$scope', function ($scope) {
 		  break;
 	  }
 
-	  if (PLAYER.getDirection() !== dir)
-	    PLAYER.setDirection(dir);
+	  if (PLAYER.direction() !== dir)
+	    PLAYER.direction(dir);
 	}
   };
 
   $scope.onKeyUp = function () {
     keysLocked = false;
-  };
-
-  $scope.turnRight = function () {
-    PLAYER.setDirection(PLAYER.getDirection() + 1);
-  };
-
-  $scope.turnLeft = function () {
-    PLAYER.setDirection(PLAYER.getDirection() - 1);
   };
 
   $scope.makeArray = function (length) {

@@ -103,7 +103,7 @@ body {
   left: 0;
   width: 100%;
 
-  & > .wall:nth-child(3), & > .wall:nth-child(4), & > .wall:last-child {
+  .wall:nth-child(3), .wall:nth-child(4), .wall:last-child {
     .transform(scaleX(-1));
   }
 
@@ -112,12 +112,12 @@ body {
     height: 64px;
 	margin-top: -32px;
 
-	& > .wall:after {
+	.wall:after {
 	  height: 40px;
 	  margin: 12px 0;
 	}
 	
-	& > .wall:first-child, & > .wall:last-child {
+	.wall:first-child, .wall:last-child {
 	  width: 280px;
 	  background-position: 68px -35px;
 
@@ -133,7 +133,7 @@ body {
 	  }
 	}
 
-	& > .wall:nth-child(2), & > .wall:nth-child(4) {
+	.wall:nth-child(2), .wall:nth-child(4) {
 	  z-index: 1;
 	  width: 152px;
 	  margin-left: -192px;
@@ -151,7 +151,7 @@ body {
 	  }
 	}
 
-	& > .wall:nth-child(3) {
+	.wall:nth-child(3) {
 	  z-index: 2;
 	  width: 128px;
 	  margin-left: -64px;
@@ -159,8 +159,8 @@ body {
 	  background-color: lighten(black, 20);
 	}
 
-	& > .wall:nth-child(4) { margin-left: 40px }
-	& > .wall:last-child { margin-left: -280px }
+	.wall:nth-child(4) { margin-left: 40px }
+	.wall:last-child { margin-left: -280px }
   }
 
   &:nth-child(2) {
@@ -168,12 +168,12 @@ body {
     height: 100px;
 	margin-top: -50px;
 
-	& > .wall:after {
+	.wall:after {
 	  height: 64px;
 	  margin: 18px 0;
 	}
 
-	& > .wall:first-child, & > .wall:last-child {
+	.wall:first-child, .wall:last-child {
 	  width: 208px;
 	  background-position: -40px -17px;
 
@@ -189,7 +189,7 @@ body {
 	  }
 	}
 
-	& > .wall:nth-child(2), & > .wall:nth-child(4) {
+	.wall:nth-child(2), .wall:nth-child(4) {
 	  z-index: 1;
 	  width: 236px;
 	  margin-left: -300px;
@@ -207,7 +207,7 @@ body {
 	  }
 	}
 
-	& > .wall:nth-child(3) {
+	.wall:nth-child(3) {
 	  z-index: 2;
 	  width: 200px;
 	  margin-left: -100px;
@@ -215,8 +215,8 @@ body {
 	  background-color: lighten(black, 40);
 	}
 
-	& > .wall:nth-child(4) { margin-left: 64px }
-	& > .wall:last-child { margin-left: -208px }
+	.wall:nth-child(4) { margin-left: 64px }
+	.wall:last-child { margin-left: -208px }
   }
 
   &:nth-child(3) {
@@ -224,12 +224,12 @@ body {
     height: 160px;
 	margin-top: -80px;
 
-	& > .wall:after {
+	.wall:after {
 	  height: 100px;
 	  margin: 30px 0;
 	}
 
-	& > .wall:first-child, & > .wall:last-child {
+	.wall:first-child, .wall:last-child {
 	  width: 100px;
 	  background-position: -140px 13px;
 
@@ -240,7 +240,7 @@ body {
 	  }
 	}
 
-	& > .wall:nth-child(2), & > .wall:nth-child(4) {
+	.wall:nth-child(2), .wall:nth-child(4) {
 	  z-index: 1;
 	  width: 300px;
 	  background-position: 240px -120px;
@@ -257,9 +257,9 @@ body {
 	  }
 	}
 
-	& > .wall:nth-child(2) { left: 0 !important }
+	.wall:nth-child(2) { left: 0 !important }
 
-	& > .wall:nth-child(3) {
+	.wall:nth-child(3) {
 	  z-index: 2;
 	  width: 320px;
 	  margin-left: -160px;
@@ -267,8 +267,8 @@ body {
 	  background-color: lighten(black, 60);
 	}
 	
-	& > .wall:nth-child(4) { margin-left: 100px }
-    & > .wall:last-child { margin-left: -100px }
+	.wall:nth-child(4) { margin-left: 100px }
+    .wall:last-child { margin-left: -100px }
   }
 
   &:nth-child(4) {
@@ -276,7 +276,7 @@ body {
     height: 260px;
 	margin-top: -130px;
 
-	& > .wall:first-child, & > .wall:last-child {
+	.wall:first-child, .wall:last-child {
 	  width: 240px;
 	  background-position: 140px -70px;
 
@@ -294,7 +294,7 @@ body {
 	  }
 	}
 
-	& > .wall:nth-child(2) {
+	.wall:nth-child(2) {
 	  z-index: 1;
 	  width: 520px;
 	  margin-left: -260px;
@@ -302,7 +302,7 @@ body {
 	  background-color: lighten(black, 80);
 	}
 
-    & > .wall:last-child { margin-left: -240px }
+    .wall:last-child { margin-left: -240px }
   }
 
   &:last-child {
@@ -310,7 +310,7 @@ body {
     height: 400px;
 	margin-top: -200px;
 
-	& > .wall:first-child, & > .wall:last-child {
+	.wall:first-child, .wall:last-child {
 	  width: 140px;
       background-image: url('../i/corners.png');
       background-repeat: no-repeat;
@@ -325,9 +325,15 @@ body {
 	  }
 	}
 
-    & > .wall:last-child { margin-left: -140px }
+    .wall:last-child { margin-left: -140px }
   }
 }
+
+.layer__tiles, .layer__objects, .layer__walls { position: relative }
+
+.layer__tiles { z-index: 0 }
+.layer__objects { z-index: 1 }
+.layer__walls { z-index: 2 }
 
 .wall {
   position: absolute;
