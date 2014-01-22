@@ -22,11 +22,16 @@
 		<div class="layer"
 		     data-ng-repeat="layer in makeArray(5) track by $index"
 			 data-ng-init="range = getRangeAt($index)">
+	      <div class="layers__tiles">
+            <div class="tile"
+		         data-ng-class="{ 'tile_empty': getCollisionAt($index, $parent.$index, range.length) === -1 }"
+		         data-ng-repeat="tile in range track by $index"></div>
+		  </div>
 	      <div class="layers__walls">
             <div class="wall"
-		         data-ng-class="{ 'wall_empty': !isWallPresent($index, $parent.$index, range.length) }"
+		         data-ng-class="{ 'wall_empty': getCollisionAt($index, $parent.$index, range.length) === 0 }"
 		         data-ng-repeat="tile in range track by $index"></div>
-		    </div>
+		  </div>
 		</div>
 	  </div>
 	</div>

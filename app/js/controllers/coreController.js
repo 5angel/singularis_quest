@@ -55,7 +55,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	  PLAYER.position(pos.x, pos.y);
   };
 
-  $scope.isWallPresent = function (x, y, range) {
+  $scope.getCollisionAt = function (x, y, range) {
 	var pos = PLAYER.position();
 	var dir = PLAYER.direction();
 
@@ -91,7 +91,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	  py = pos.y + dx;
 	}
 
-	return level.getCollisions(px, py) === 1;
+	return level.getCollisions(px, py);
   };
 
   var keysLocked = false;
@@ -137,12 +137,15 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	  switch (value) {
 	    case 4:
 		  return 2;
+
 		  break;
 		case 3:
 		  return 3;
+
 		  break;
 		default:
 		  return 5;
+
 		  break;
 	  }
 	}) (index);
