@@ -52,6 +52,17 @@ function Entity(_x, _y) {
 
 Entity.inherits(GameObject);
 
+function Sign(_x, _y, _text) {
+  GameObject.apply(this, arguments);
+
+  if (typeof _text !== 'string')
+    _text = '';
+
+  this.text = function () {
+    return _text;
+  };
+}
+
 function Level(_collisions, width) {
   _collisions = _collisions || new Array(25);
   width = width || 5;
