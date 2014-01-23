@@ -2,10 +2,14 @@ function GameObject(_x, _y) {
   if (arguments.length === 0)
     return;
 
+  this.name = this.name || 'GameObject';
+
   GameObject.lastId = GameObject.lastId || 0;
   GameObject.lastId++;
   
-  var _id = GameObject.lastId;
+  var _id = this.name + '_' + GameObject.lastId.toString();
+
+  delete this.name;
 
   this.id = function () {
     return _id;
@@ -20,7 +24,7 @@ function GameObject(_x, _y) {
 	  if (typeof y === 'number')
 	    _y = Math.round(y);
 
-	  console.log('Position of "' + _id.toString() + '" is set to [' + _x.toString() + ';' + _y.toString() + ']');
+	  console.log('Position of "' + _id + '" is set to [' + _x.toString() + ';' + _y.toString() + ']');
 	}
 
 	_x = _x || 0;
@@ -31,6 +35,11 @@ function GameObject(_x, _y) {
 };
 
 function Entity(_x, _y) {
+  if (arguments.length === 0)
+    return;
+
+  this.name = this.name || 'Entity';
+
   GameObject.apply(this, arguments);
 
   var DIRECTIONS = ['north', 'east', 'south', 'west'];
@@ -45,21 +54,30 @@ function Entity(_x, _y) {
 	  value = value > 3 ? 0 : value;
 	  _direction = Math.round(value);
 
-	  console.log('Direction of "' + this.id().toString() + '" is set to', DIRECTIONS[_direction]);
+	  console.log('Direction of "' + this.id() + '" is set to', DIRECTIONS[_direction]);
 	}
   };
 };
 
 Entity.inherits(GameObject);
 
-function Sign(_x, _y, _text) {
+function Sign(_x, _y) {
+  if (arguments.length === 0)
+    return;
+
+  this.name = this.name || 'Sign';
+
   GameObject.apply(this, arguments);
 
-  if (typeof _text !== 'string')
-    _text = '';
+  var _text = Array.prototype.slice.call(arguments, 2).filter(function (item) {
+    return typeof item === 'string';
+  });
 
-  this.text = function () {
-    return _text;
+  this.text = function (index) {
+    if (typeof index === 'undefined')
+	  return _text.slice();
+	else
+	  return _text[index];
   };
 }
 
@@ -75,7 +93,7 @@ function Level(_collisions, width) {
   var objects = [];
 
   this.getCollisions = function (x, y) {
-    if (x === undefined && y === undefined)
+    if (typeof x === 'undefined' && typeof y === 'undefined')
       return _collisions.slice();
 	else {
 	  x = x || 0;
@@ -91,7 +109,7 @@ function Level(_collisions, width) {
   this.getDimensions = function () {
     return {
 	  length: length,
-	  width: width,
+	  width:  width,
 	  height: length / width
 	}
   };
