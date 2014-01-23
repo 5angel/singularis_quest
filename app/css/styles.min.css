@@ -59,17 +59,19 @@ body {
 }
 .sign {
   position: absolute;
+  z-index: 1;
   bottom: 80px;
   left: 0;
   width: 100%;
   padding: 20px;
+  color: white;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
 .sign__wrap {
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 .pointers {
   position: relative;
