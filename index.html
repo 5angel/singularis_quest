@@ -18,6 +18,11 @@
 	  <div class="notice">
 	    <div class="notice__wrap">click to continue</div>
 	  </div>
+	  <div class="sign"
+	       data-ng-hide="!signsPending.length"
+	       data-game-sign="signsPending">
+		<div class="sign__wrap"></div>
+	  </div>
 	  <div class="level">
 		<div class="layer"
 		     data-ng-repeat="layer in makeArray(5) track by $index"

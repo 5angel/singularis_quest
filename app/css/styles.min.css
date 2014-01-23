@@ -24,11 +24,17 @@ body {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
+#container  > .sign {
+  display: none;
+}
 #container:focus {
   outline: none;
 }
 #container:focus  > .notice {
   display: none;
+}
+#container:focus  > .sign {
+  display: block;
 }
 .notice {
   position: absolute;
@@ -50,6 +56,20 @@ body {
   vertical-align: middle;
   text-align: center;
   color: white;
+}
+.sign {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.sign__wrap {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .pointers {
   position: relative;

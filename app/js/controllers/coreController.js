@@ -1,30 +1,25 @@
 app.controller('CoreController', ['$scope', function ($scope) {
   console.log('CoreController init');
 
-  var PLAYER = new Entity(9, 5);
+  var PLAYER = new Entity(0, 0, 1);
   
   var level = new Level([
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,
-	0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,
-	0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,
-	0,0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,
-	0,0,0,0,0,0,1,1,0,1,0,1,1,0,0,0,0,0,0,0
-  ], 20);
+	0,0,0,0,0,1,0,0,0,0,
+    1,1,1,1,0,1,0,0,0,0,
+	0,0,0,1,1,1,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0
+  ], 10, [
+    new Sign(4, 1, 'derp')
+  ]);
+
+  $scope.frozen = false;
+  $scope.signsPending = [];
 
   function stepForward() {
 	var pos = PLAYER.position();
@@ -49,10 +44,22 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	    break;
 	}
 
-	var type = level.getCollisions(pos.x, pos.y);
-
-	if (type === 0)
+	if (level.getCollisions(pos.x, pos.y) === 0) {
 	  PLAYER.position(pos.x, pos.y);
+
+	  var sings = [];
+
+	  level.getObjects(pos.x, pos.y).forEach(function (item) {
+	    if (item instanceof Sign) {
+		  $scope.frozen = true;
+
+		  sings = sings.concat(item.text());
+		}
+	  });
+
+	  if (!!sings.length)
+	    $scope.signsPending = sings;
+	}
   };
 
   $scope.getCollisionAt = function (x, y, range) {
@@ -101,26 +108,26 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	if (!keysLocked) {
       keysLocked = true;
 
-	  var dir = PLAYER.direction();
+	  if (!$scope.frozen) {
+	    var dir = PLAYER.direction();
 
-	  switch ($event.keyCode) {
-	    case 65:
-		  dir--;
+	    switch ($event.keyCode) {
+	      case 65:
+		    PLAYER.direction(dir - 1);
 
-		  break;
-	    case 68:
-		  dir++
+		    break;
+	      case 68:
+		    PLAYER.direction(dir + 1);
 
-		  break;
-		case 87:
-		  stepForward();
-		  return;
+		    break;
+		  case 87:
+		    stepForward();
 
-		  break;
+		    break;
+	    }
+	  } else {
+	    console.log('lol');
 	  }
-
-	  if (PLAYER.direction() !== dir)
-	    PLAYER.direction(dir);
 	}
   };
 

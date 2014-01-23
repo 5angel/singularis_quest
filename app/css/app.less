@@ -18,10 +18,13 @@ body {
   margin-left: -(@width / 2);
   .box-sizing(border-box);
 
+  & > .sign { display: none }
+
   &:focus {
     outline: none;
 
 	& > .notice { display: none }
+	& > .sign { display: block }
   }
 }
 
@@ -46,6 +49,20 @@ body {
   vertical-align: middle;
   text-align: center;
   color: white;
+}
+
+.sign {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  .box-sizing(border-box);
+}
+
+.sign__wrap {
+  padding: 10px;
+  background-color: rgba(0,0,0,.5);
 }
 
 .pointers {
