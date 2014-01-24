@@ -120,6 +120,18 @@ function Level(_collisions, _width, objects) {
 	return _objects[index] || [];
   };
 
+  this.hideObject = function (object) {
+    var pos = object.position();
+	var array = _objects[(pos.y * _width) + pos.x];
+	var index = array.indexOf(object);
+
+	if (index !== -1) {
+	  array.splice(index, 1);
+	  return true;
+	} else
+	  return false;
+  };
+  
   this.getCollisions = function (x, y) {
     if (x === undefined && y === undefined)
       return _collisions.slice();
