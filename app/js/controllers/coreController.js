@@ -2,7 +2,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
   console.log('CoreController init');
 
   var PLAYER = new Entity(0, 0, 1);
-  
+
   var level = new Level([
 	0,0,0,0,0,1,0,0,0,0,
     1,1,1,1,0,1,0,0,0,0,
@@ -15,11 +15,13 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0
   ], 10, [
-    new Sign(4, 1, 'derp')
+    new Sign(4, 1, 'herp'), new Sign(4, 1, 'derp'),
   ]);
 
+  var singsPending = [];
+
   $scope.frozen = false;
-  $scope.signsPending = [];
+  $scope.textToType = '';
 
   function stepForward() {
 	var pos = PLAYER.position();
@@ -47,18 +49,18 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	if (level.getCollisions(pos.x, pos.y) === 0) {
 	  PLAYER.position(pos.x, pos.y);
 
-	  var sings = [];
+	  singsPending = [];
 
 	  level.getObjects(pos.x, pos.y).forEach(function (item) {
 	    if (item instanceof Sign) {
-		  $scope.frozen = true;
+		  singsPending = singsPending.concat(item.text());
 
-		  sings = sings.concat(item.text());
+		  if (!$scope.frozen) {
+		    $scope.frozen = true;
+			$scope.textToType = singsPending.shift();
+		  }
 		}
 	  });
-
-	  if (!!sings.length)
-	    $scope.signsPending = sings;
 	}
   };
 

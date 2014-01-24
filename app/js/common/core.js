@@ -103,7 +103,7 @@ function Level(_collisions, _width, objects) {
 		_objects[index] = array;
 
 		if (array.indexOf(item) === -1)
-		  _objects.push(item);
+		  array.push(item);
 	  }
 	});
   };

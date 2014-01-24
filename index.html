@@ -19,9 +19,9 @@
 	    <div class="notice__wrap">click to continue</div>
 	  </div>
 	  <div class="sign"
-	       data-ng-hide="!signsPending.length"
-	       data-game-sign="signsPending">
-		<div class="sign__wrap">{{ signsPending[0] }}</div>
+	       data-ng-hide="!textToType">
+		<div class="sign__wrap"
+		     data-game-sign="textToType"></div>
 	  </div>
 	  <div class="level">
 		<div class="layer"
@@ -44,5 +44,6 @@
   <script type="text/javascript" src="app/js/common/sugar.js"></script>
   <script type="text/javascript" src="app/js/common/core.js"></script>
   <script type="text/javascript" src="app/js/common/app.js"></script>
+  <script type="text/javascript" src="app/js/common/directives.js"></script>
   <script type="text/javascript" src="app/js/controllers/coreController.js"></script>
 </html>
