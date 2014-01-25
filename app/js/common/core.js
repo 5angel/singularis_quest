@@ -1,3 +1,7 @@
+/**
+ * GameObject
+ */
+
 function GameObject(_x, _y) {
   if (arguments.length === 0)
     return;
@@ -32,6 +36,27 @@ function GameObject(_x, _y) {
   this.position(_x, _y);
 };
 
+/**
+ * Sprite
+ */
+
+function Sprite(_x, _y, _type) {
+  GameObject.apply(this, arguments);
+
+  if (typeof _type !== 'string' || _type === '')
+    _type = 'unknown';
+
+  this.type = function () {
+    return _type;
+  };
+}
+
+Sprite.inherits(GameObject);
+
+/**
+ * Entity
+ */
+
 function Entity(_x, _y, _direction) {
   GameObject.apply(this, arguments);
 
@@ -55,6 +80,10 @@ function Entity(_x, _y, _direction) {
 
 Entity.inherits(GameObject);
 
+/**
+ * Sign
+ */
+
 function Sign(_x, _y) {
   if (arguments.length === 0)
     return;
@@ -76,6 +105,10 @@ function Sign(_x, _y) {
 }
 
 Sign.inherits(GameObject);
+
+/**
+ * Level
+ */
 
 function Level(_collisions, _width, objects) {
   _collisions = _collisions || new Array(25);

@@ -22,6 +22,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	new Sign(0, 5, 'Ты нашел банан.'),
 	new Sign(0, 5, 'Поздравляю.'),
 	new Sign(0, 5, 'Или все-таки нет?!'),
+	new Sprite(4, 0)
   ]);
 
   var singsPending = [];
@@ -29,6 +30,40 @@ app.controller('CoreController', ['$scope', function ($scope) {
 
   $scope.frozen = false;
   $scope.textToType = '';
+
+  function getRangeDelta(x, y, range) {
+	var dx = (function (value) {
+	  switch (value) {
+	    case 5:
+		  return x - 2;
+
+		  break;
+        case 3:
+		  return x - 1;
+
+		  break;
+	    case 2:
+		  return x === 0 ? -1 : 1;
+
+		  break;
+	  }
+	}) (range);
+
+	var dy = 4 - y;
+
+	var dir = PLAYER.direction();
+
+	if (dir >= 2)
+	  dx *= -1;
+
+	if (dir === 0 || dir === 3)
+	  dy *= -1;
+
+	if (dir % 2 === 1)
+	  return { x: dy, y: dx };
+	else
+	  return { x: dx, y: dy };
+  };
 
   function stepForward() {
 	var pos = PLAYER.position();
@@ -79,43 +114,61 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	}
   };
 
-  $scope.getCollisionAt = function (x, y, range) {
+  var SPRITES_CACHE = [];
+  var TYPES_DELTA = {
+    0: 'first',
+	1: 'second',
+	2: 'third',
+	3: 'forth',
+	4: 'fifth'
+  };
+  
+  $scope.getSpritesAt = function (y, range) {
+    var sprites = [];
+
+	if (range === 2)
+	  range++;
+
 	var pos = PLAYER.position();
-	var dir = PLAYER.direction();
+	var width = level.getDimensions().width;  
+	  
+    for (var x = 0; x < range; ++x) {
+	  var delta = getRangeDelta(x, y, range);
+      var index = (y * width) + x;
+	  
+	  level.getObjects(pos.x + delta.x, pos.y + delta.y).forEach(function (item) {
+	    if (item instanceof Sprite) {
+		  var link   = { order: TYPES_DELTA[x], type: item.type() };
+		  var array  = SPRITES_CACHE[index] || [link];
+		  var exists = false;
 
-	var dx = (function (value) {
-	  switch (value) {
-	    case 5:
-		  return x - 2;
+		  for (var i = 0; i < array.length; ++i) {
+		    var tmp = array[i];
+			
+			if (tmp.dx === link.dx && tmp.type === link.type) {
+			  exists = true;
+			  break;
+			}
+		  }
 
-		  break;
-		case 3:
-		  return x - 1;
+		  if (!exists)
+		    array.push(link);
 
-		  break;
-		case 2:
-		  return x === 0 ? -1 : 1;
+		  SPRITES_CACHE[index] = array;
 
-		  break;
-	  }
-	}) (range);
-
-	var dy = 4 - y;
-
-	if (dir >= 2)
-	  dx *= -1;
-
-	if (dir === 0 || dir === 3)
-	  dy *= -1;
-
-	var px = pos.x + dx, py = pos.y + dy;
-
-	if (dir % 2 === 1) {
-      px = pos.x + dy;
-	  py = pos.y + dx;
+		  sprites = sprites.concat(array);
+	    }
+	  });
 	}
 
-	return level.getCollisions(px, py);
+	return sprites;
+  };
+
+  $scope.getCollisionAt = function (x, y, range) {
+	var pos = PLAYER.position();
+	var delta = getRangeDelta(x, y, range);
+
+	return level.getCollisions(pos.x + delta.x, pos.y + delta.y);
   };
 
   var keysLocked = false;

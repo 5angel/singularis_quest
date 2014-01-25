@@ -32,6 +32,10 @@
 		         data-ng-class="{ 'tile_empty': getCollisionAt($index, $parent.$index, range.length) === -1 }"
 		         data-ng-repeat="tile in range track by $index"></div>
 		  </div>
+		  <div class="layers__sprites">
+            <div class="sprite {{ 'sprite_type_' + sprite.type }} {{ 'sprite_order_' + sprite.order }}"
+		         data-ng-repeat="sprite in getSpritesAt($index, range.length)"></div>
+		  </div>
 	      <div class="layers__walls">
             <div class="wall"
 		         data-ng-class="{ 'wall_empty': getCollisionAt($index, $parent.$index, range.length) === 0 }"
