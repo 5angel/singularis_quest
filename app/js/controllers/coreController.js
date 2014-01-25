@@ -21,7 +21,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
 	new Sign(0, 2, 'Тупой шоле?'),
 	new Sign(0, 5, 'Ты нашел банан.'),
 	new Sign(0, 5, 'Поздравляю.'),
-	new Sign(0, 5, 'Или все-таки нет?.'),
+	new Sign(0, 5, 'Или все-таки нет?!'),
   ]);
 
   var singsPending = [];
