@@ -5,19 +5,20 @@ body {
   font-family: monospace;
 }
 
-@width: 800px;
-@height: 600px;
+@WIDTH: 800px;
+@HEIGHT: 600px;
+@floor: (@HEIGHT - 84px) / 2;
 
 #container {
   overflow: hidden;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: @width;
-  height: @height;
-  padding-bottom: 80px;
-  margin-top: -(@height / 2);
-  margin-left: -(@width / 2);
+  width: @WIDTH;
+  height: @HEIGHT;
+  padding-bottom: 84px;
+  margin-top: -(@HEIGHT / 2);
+  margin-left: -(@WIDTH / 2);
   .box-sizing(border-box);
 }
 
@@ -27,241 +28,127 @@ body {
   height: 100%;
 }
 
+._tile(center, @height, @base) {
+  @slope_2: ((@height * 2) + 2px) * 2;
+
+  z-index: 2;
+  width: @slope_2 * 2;
+  height: @floor - (@height * 2) - 2px;
+  margin-top: (@height * 2) + 2px;
+  margin-left: -@slope_2;
+  background-color: lighten(black, @base / 2);
+
+  &:before {
+    width: ((@height * 2) + 4px) * 2;
+	margin-top: -@height;
+    border: @height * 2 solid transparent;
+	border-top-width: 0;
+	border-bottom: @height solid lighten(black, @base);
+  }
+}
+
+._tile(side, @height, @base, @K) {
+  @slope_2: ((@height * 2) + 2px) * 2;
+  @slope_6: (((@height * 2) + 3px) * 6) + 2px;
+  @deltaWidth: @slope_6 - @slope_2 - (@height * 6);
+  @cornerWidth: @height * 6;
+  
+  z-index: 1;
+  width: @deltaWidth;
+  height: @floor - (@height * 2) - 2px;
+  margin-top: @height + 2px;
+  margin-left: -(@deltaWidth + @slope_2);
+  border-top: @height solid lighten(black, @base);
+  border-right: @slope_2 - ((@height + 2px) * 2) solid lighten(black, (@base / 2) - @K);
+  background-color: lighten(black, @base / 2);
+
+  &:before {
+    width: @cornerWidth;
+    height: @floor - (@height * 2) - 2px;
+	margin-left: -@cornerWidth;
+	background-color: lighten(black, @base / 2);
+  }
+
+  &:after {
+	margin-top: -@height;
+	margin-left: -@cornerWidth;
+	border-bottom: @height solid lighten(black, @base);
+	border-left: @height * 6 solid transparent;
+  }
+}
+
+._tile(corner, @height, @base, @K) {
+  @slope_6: (((@height * 2) + 3px) * 6) + 2px;
+  @cornerWidth: @height * 6;
+
+  width: (@WIDTH / 2) - @slope_6;
+  height: @floor - (@height * 2) - 2px;
+  margin-top: @height + 2px;
+  border-top: @height solid lighten(black, @base);
+  border-right: @cornerWidth solid lighten(black, (@base / 2) - (@K * 2));
+  background-color: lighten(black, @base / 2);
+}
+
+._layer(long, @height: 8px, @base: 20, @K: 2) {
+  @slope_6: (((@height * 2) + 3px) * 6) + 2px;
+  @cornerWidth: @height * 6;
+
+  > .tile:first-child, > .tile:last-child {
+    ._tile(corner, @height, @base - (@K * 2), @K);
+  }
+
+  > .tile:nth-child(2), > .tile:nth-child(4) {
+    ._tile(side, @height, @base - @K, @K);
+  }
+
+  > .tile:nth-child(3) {
+    ._tile(center, @height, @base);
+  }
+
+  > .tile:nth-child(4) { margin-left: (@height + 2px) * 2 }
+  > .tile:last-child { margin-left: @slope_6 - @cornerWidth }
+}
+
+._layer(short, @height: 8px, @base: 20, @K: 2) {
+  > .tile:first-child, > .tile:last-child {
+    ._tile(side, @height, @base - @K, @K);
+  }
+
+  > .tile:nth-child(2) {
+    ._tile(center, @height, @base);
+  }
+
+  > .tile:last-child { margin-left: (@height + 2px)  * 2 }
+}
+
 .layer {
   position: absolute;
-  top: 100%;
+  top: 50%;
   left: 0;
   width: 100%;
 
-  /* tiles */
-
   &:first-child > .layer__tiles {
-    height: 240px;
-	margin-top: -240px;
-
-    > .tile {
-	  z-index: 0;
-	}
+    ._layer(long);
   }
 
   &:nth-child(2) > .layer__tiles {
-    height: 228px;
-	margin-top: -228px;
-
-	> .tile {
-	  z-index: 0;
-
-	  &:first-child, &:last-child {
-	    width: 100px;
-		height: 210px;
-		border-top: 18px solid lighten(black, 30);
-		border-right: 108px solid lighten(black, 20);
-		background-color: lighten(black, 25);
-	  }
-
-	  &:nth-child(2), &:nth-child(4) {
-	    z-index: 1;
-	    width: 100px;
-		height: 210px;
-		margin: 0 200px;
-		border-top: 18px solid lighten(black, 35);
-		border-right: 36px solid lighten(black, 25);
-		background-color: lighten(black, 30);
-
-		&:before {
-		  height: 18px;
-		  margin-top: -18px;
-		  margin-left: -100px;
-		  border-top: 18px solid transparent;
-		  border-right: 100px solid lighten(black, 35);
-		}
-
-		&:after {
-		  width: 100px;
-		  height: 210px;
-		  margin-left: -100px;
-		  background-color: lighten(black, 30);
-		}
-	  }
-
-	  &:nth-child(3) {
-	    left: 50%;
-	    z-index: 2;
-	    width: 200px;
-		height: 210px;
-		margin-top: 18px;
-		margin-left: -100px;
-		background-color: lighten(black, 35);
-
-		&:before, &:after {
-		  width: 128px;
-		  margin-top: -18px;
-		  border-bottom: 18px solid lighten(black, 40);
-		}
-
-		&:before { border-left: 36px solid transparent }
-
-		&:after {
-		  margin-left: 36px;
-		  border-right: 36px solid transparent;
-		}
-	  }
-	  
-	  &:nth-child(4) { margin-left: -336px }
-
-	  &:last-child { margin-left: -208px }
-	}
+    ._layer(long, 16px, 40, 4);
   }
 
   &:nth-child(3) > .layer__tiles {
-    height: 210px;
-	margin-top: -210px;
-
-	> .tile {
-	  z-index: 0;
-
-	  &:first-child, &:last-child {
-	    width: 0;
-		height: 193px;
-		border-top: 17px solid lighten(black, 50);
-		border-right: 100px solid transparent;
-		background-color: lighten(black, 45);
-	  }
-
-	  &:nth-child(2), &:nth-child(4) {
-	    z-index: 1;
-	    width: 140px;
-		height: 180px;
-		margin: 0 100px;
-		border-top: 30px solid lighten(black, 55);
-		border-right: 60px solid lighten(black, 50);
-		background-color: lighten(black, 50);
-
-		&:before {
-		  height: 13px;
-		  margin-top: -30px;
-		  margin-left: -100px;
-		  border-top: 17px solid transparent;
-		  border-right: 100px solid lighten(black, 55);
-		}
-
-		&:after {
-		  width: 100px;
-		  height: 180px;
-		  margin-left: -100px;
-		  background-color: lighten(black, 50);
-		}
-	  }
-
-	  &:nth-child(3) {
-	    left: 50%;
-	    z-index: 2;
-	    width: 320px;
-		height: 180px;
-		margin-top: 30px;
-		margin-left: -160px;
-		background-color: lighten(black, 55);
-
-		&:before, &:after {
-		  width: 120px;
-		  margin-top: -30px;
-		  border-bottom: 30px solid lighten(black, 60);
-		}
-
-		&:before { border-left: 60px solid transparent }
-
-		&:after {
-		  margin-left: 140px;
-		  border-right: 60px solid transparent;
-		}
-	  }
-
-	  &:nth-child(4) { margin-left: -300px }
-
-      &:last-child { margin-left: -100px }
-	}
-  }  
+    ._layer(long, 32px, 60, 6);
+  }
 
   &:nth-child(4) > .layer__tiles {
-    height: 180px;
-	margin-top: -180px;
+    ._layer(short, 64px, 80, 8);
 
-	> .tile {
-	  z-index: 3;
-
-	  &:first-child, &:last-child {
-	    width: 140px;
-		height: 130px;
-		border-top: 50px solid lighten(black, 75);
-		border-right: 100px solid lighten(black, 70);
-		background-color: lighten(black, 70);
-	  }
-
-	  &:last-child { margin-left: -240px }
-
-	  &:nth-child(2) {
-	    z-index: 4;
-	    margin: 50px 140px 0;
-		width: 520px;
-		height: 130px;
-		background-color: lighten(black, 75);
-
-		&:before, &:after {
-		  width: 320px;
-		  margin-top: -50px;
-		  border-bottom: 50px solid lighten(black, 80);
-		}
-
-		&:before { border-left: 100px solid transparent }
-
-		&:after {
-		  margin-left: 100px;
-		  border-right: 100px solid transparent;
-		}
-	  }
-	}
+	> .tile:first-child { left: 50% }
   }
 
   &:last-child > .layer__tiles {
-    height: 130px;
-	margin-top: -130px;
+    ._layer(short, 128px, 100, 10);
 
-	> .tile {
-	  z-index: 4;
-
-	  &:first-child, &:last-child {
-	    width: 140px;
-		background-color: lighten(black, 90);
-
-		&:before {
-		  border-top: 70px solid lighten(black, 95);
-		  border-right: 140px solid transparent;
-		}
-	  }
-
-	  &:last-child { margin-left: -140px }
-
-	  &:nth-child(2) {
-	    z-index: 5;
-	    width: 100%;
-		height: 60px;
-		margin-top: 70px;
-		background-color: white;
-
-		&:before, &:after {
-		  width: 520px;
-		  margin-top: -70px;
-		  border-bottom: 70px solid white;
-		}
-
-		&:before { border-left: 140px solid transparent }
-
-		&:after {
-		  margin-left: 140px;
-		  border-right: 140px solid transparent;
-		}
-	  }
-	}
+    > .tile:first-child { left: 50% }
   }
 }
 
@@ -271,14 +158,14 @@ body {
   .tile {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
     height: 100%;
 	border-width: 0;
 	border-style: solid;
 
+	&:first-child { left: 0 }
+
 	&:nth-child(4), &:last-child {
-	  left: 100%;
-	  margin-left: -240px;
 	  .transform(scaleX(-1));
 	}
 

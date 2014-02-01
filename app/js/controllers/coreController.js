@@ -4,14 +4,12 @@ app.controller('CoreController', ['$scope', function ($scope) {
   var PLAYER = new Entity(0, 0, 1);
 
   var level = new Level([
-	0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,
-	0,0,1,0,1,0,0,
-	0,0,1,0,1,0,0,
-	0,0,1,0,1,0,0,
-	0,0,0,0,0,0,0
-  ], 7, [
+	0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,
+	0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,
+	0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0
+  ], 20, [
     new Sign(3, 4, '!!!'),
 	new Sprite(3, 4)
   ]);
@@ -23,23 +21,7 @@ app.controller('CoreController', ['$scope', function ($scope) {
   $scope.textToType = '';
 
   function getRangeDelta(x, y, range) {
-	var dx = (function (value) {
-	  switch (value) {
-	    case 5:
-		  return x - 2;
-
-		  break;
-        case 3:
-		  return x - 1;
-
-		  break;
-	    case 2:
-		  return x === 0 ? -1 : 1;
-
-		  break;
-	  }
-	}) (range);
-
+    var dx = [,,x === 0 ? -1 : 1, x - 1,,x - 2][range];
 	var dy = 4 - y;
 
 	var dir = PLAYER.direction();
