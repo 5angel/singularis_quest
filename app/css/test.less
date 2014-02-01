@@ -89,7 +89,7 @@ body {
   background-color: lighten(black, @base / 2);
 }
 
-._layer(long, @height: 8px, @base: 20, @K: 2) {
+._layer(long, @height, @base, @K) {
   @slope_6: (((@height * 2) + 3px) * 6) + 2px;
   @cornerWidth: @height * 6;
 
@@ -109,7 +109,7 @@ body {
   > .tile:last-child { margin-left: @slope_6 - @cornerWidth }
 }
 
-._layer(short, @height: 8px, @base: 20, @K: 2) {
+._layer(short, @height, @base, @K) {
   > .tile:first-child, > .tile:last-child {
     ._tile(side, @height, @base - @K, @K);
   }
@@ -128,29 +128,32 @@ body {
   width: 100%;
 
   &:first-child > .layer__tiles {
-    ._layer(long);
+    ._layer(long, 8px, 20, 2);
   }
 
   &:nth-child(2) > .layer__tiles {
-    ._layer(long, 16px, 40, 4);
+    ._layer(long, 8px * 2, 20 * 2, 2 * 2);
   }
 
   &:nth-child(3) > .layer__tiles {
-    ._layer(long, 32px, 60, 6);
+    ._layer(long, 8px * 4, 20 * 3, 2 * 3);
   }
 
   &:nth-child(4) > .layer__tiles {
-    ._layer(short, 64px, 80, 8);
+    ._layer(short, 8px * 8, 20 * 4, 2 * 4);
 
 	> .tile:first-child { left: 50% }
   }
 
   &:last-child > .layer__tiles {
-    ._layer(short, 128px, 100, 10);
+    ._layer(short, 8px * 16, 20 * 5, 2 * 5);
 
     > .tile:first-child { left: 50% }
   }
 }
+
+.layer__tiles:active { opacity: 0 }
+.tile:hover { opacity: 0 }
 
 .layer__tiles {
   position: relative;
